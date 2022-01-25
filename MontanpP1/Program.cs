@@ -17,12 +17,9 @@ namespace MontanpP1
             ProgramHeader();
             DisplayHeader();
             GetMolecularWeight(ref gasNames, ref molecularWeights, out count);
+            DisplayGasNames(gasNames,count);
 
-            for (int i = 0; i < gasNames.Length - 2; i += 3)
-            {
-                Console.WriteLine(String.Format("{0,-20:D}",gasNames[i]) + "\t" + String.Format("{0,-20:D}", gasNames[i + 1]) + "\t" + String.Format("{0,-20:D}", gasNames[i + 2])); 
-            }
-            System.Console.ReadLine();
+            
         }
 
 
@@ -45,8 +42,8 @@ namespace MontanpP1
         {
             count = 0;
 
-            
-            foreach (string line in System.IO.File.ReadLines(@"D:\School\NetCsharp\Programs\MontanpP1\MontanpP1\MolecularWeightsGasesAndVapors.csv"))
+
+            foreach (string line in System.IO.File.ReadLines(@"MolecularWeightsGasesAndVapors.csv"))
             {
                 //System.Console.WriteLine(line);
                 string[] elements = line.Split(',');
@@ -54,13 +51,22 @@ namespace MontanpP1
                 molecularWeights[count] = double.Parse(elements[1]);
                 count++;
             }
-            
+
 
             System.Console.WriteLine("There were {0} lines.", count);
-            
-           
-            
+
         }
+        
+        public static void DisplayGasNames(string [] gasNames, int countGases)
+        {
+            for (int i = 0; i < gasNames.Length - 2; i += 3)
+            {
+                Console.WriteLine(String.Format("{0,-20:D}", gasNames[i]) + "\t" + String.Format("{0,-20:D}", gasNames[i + 1]) + "\t" + String.Format("{0,-20:D}", gasNames[i + 2]));
+            }
+            System.Console.ReadLine();
+        }
+            
+        
 
      
 
