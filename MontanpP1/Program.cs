@@ -11,19 +11,23 @@ namespace MontanpP1
         {
             string[] gasNames = new string[100];
             double[] molecularWeights = new double[100];
-            int count = 0;  
-
+            double temp = 0;
+            int count = 0;
+            string gasName = "";
+            double volume = 0;
+            double mass = 0;
 
             ProgramHeader();
             DisplayHeader();
             GetMolecularWeight(ref gasNames, ref molecularWeights, out count);
             DisplayGasNames(gasNames,count);
+            double molecularWeight = GetMolecularWeightFromName(gasName, gasNames, molecularWeights, count);
+            Pressure(mass, volume, temp, molecularWeight);
 
-            
         }
 
 
-        public static void DisplayHeader()
+        private static void DisplayHeader()
         {
             Console.WriteLine("\n------------------------------------------------" +
                 "\n\n Hello and welcome to the " +
@@ -31,14 +35,14 @@ namespace MontanpP1
                 "\n\n------------------------------------------------");
         }
 
-        public static void ProgramHeader()
+        private static void ProgramHeader()
         {
             Console.WriteLine("\n Name: Andrew Montano" +
                 "\n Program: MontanoP1 \n Objective: Get the pressure of " +
                 "a given gas");
         }
 
-        public static void GetMolecularWeight(ref string[] gasNames, ref double[] molecularWeights, out int count)
+        static void GetMolecularWeight(ref string[] gasNames, ref double[] molecularWeights, out int count)
         {
             count = 0;
 
@@ -57,16 +61,77 @@ namespace MontanpP1
 
         }
         
-        public static void DisplayGasNames(string [] gasNames, int countGases)
+        private static void DisplayGasNames(string [] gasNames, int countGases)
         {
-            for (int i = 0; i < gasNames.Length - 2; i += 3)
+            for (int i = 0; i < countGases; i += 3)
             {
                 Console.WriteLine(String.Format("{0,-20:D}", gasNames[i]) + "\t" + String.Format("{0,-20:D}", gasNames[i + 1]) + "\t" + String.Format("{0,-20:D}", gasNames[i + 2]));
             }
-            System.Console.ReadLine();
+            //System.Console.ReadLine();
         }
+        private static double GetMolecularWeightFromName(string gasName, string[] gasNames, double[] molecularWeights, int countGases)
+        {
+            Console.WriteLine("\n Please choose a gas from the list above (type out full name of gas as you see it): ");
+            gasName = Console.ReadLine();
+            var stringToFind = gasName;
+            var result = Array.IndexOf(gasNames, stringToFind);
+            if (result == -1)
+            {
+                Console.WriteLine("\n Check spelling of the gas you chose");
+            }
+            else
+            {
+                Console.WriteLine("\n The gas you chose is " + gasName + " and has a molecular weight of " + molecularWeights[result] + " grams per mole!");
+            }
+                return molecularWeights[result];
             
+        }
+
+        static double CelciusToKelvin(double celcius)
+        {
+            Console.WriteLine("\n At what temperature celsius is the gas in?: ");
+            celcius = double.Parse(Console.ReadLine());
+            double kelvin = celcius + 273.15;
+
+
+            //Console.WriteLine(kelvin);
+            return kelvin;
+            
+        }
         
+        static double NumberOfMoles(double mass, double molecularWeight)
+        {
+            double moles = mass / molecularWeight;
+            return moles;
+        }
+
+        static double Pressure(double mass, double vol, double temp, double molecularWeight)
+        {
+            double celcius = 0;
+            const double idealConst = 8.3145;
+
+            Console.WriteLine("\nEnter the mass of the gas (this is measured in grams): ");
+            mass = double.Parse(Console.ReadLine());
+
+            Console.WriteLine("\nNow enter the volume (this is measeured in meters cubed): ");
+            vol = double.Parse(Console.ReadLine());
+
+            temp = CelciusToKelvin(celcius);
+            double numMoles = NumberOfMoles(mass, molecularWeight);
+            double pressureInPascals = (numMoles * idealConst * temp) / vol;
+            double psi = PaToPSI(pressureInPascals);
+            
+            Console.WriteLine("\nPressure in pascals is : " + pressureInPascals);
+            Console.WriteLine("\nThe PSI is: " + psi );
+            return pressureInPascals;
+        }
+         
+        static double PaToPSI(double pascals)
+        {
+            double psi = pascals / 6895;
+            Console.WriteLine(" The PSI is " + psi);
+            return psi;
+        }
 
      
 
