@@ -110,6 +110,7 @@ namespace MontanpP1
         static double NumberOfMoles(double mass, double molecularWeight)
         {
             double moles = mass / molecularWeight;
+            Console.WriteLine(moles);
             return moles;
         }
 
