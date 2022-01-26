@@ -16,13 +16,21 @@ namespace MontanpP1
             string gasName = "";
             double volume = 0;
             double mass = 0;
+            char another;
 
             ProgramHeader();
             DisplayHeader();
             GetMolecularWeight(ref gasNames, ref molecularWeights, out count);
-            DisplayGasNames(gasNames,count);
-            double molecularWeight = GetMolecularWeightFromName(gasName, gasNames, molecularWeights, count);
-            Pressure(mass, volume, temp, molecularWeight);
+            do
+            {   DisplayGasNames(gasNames,count);
+                double molecularWeight = GetMolecularWeightFromName(gasName, gasNames, molecularWeights, count);
+                Pressure(mass, volume, temp, molecularWeight);
+
+                Console.WriteLine("\nDo you want to try another gas?: y/n ");
+                another = char.Parse(Console.ReadLine());
+            } while (another == 'y');
+            
+            Console.WriteLine("\n\nThanks for testing out Montano Ideal Gas Calculator!\n           Have a fantasitc day!!   ");
 
         }
 
@@ -110,19 +118,21 @@ namespace MontanpP1
             double celcius = 0;
             const double idealConst = 8.3145;
 
-            Console.WriteLine("\nEnter the mass of the gas (this is measured in grams): ");
+            Console.WriteLine("\n Enter the mass of the gas (this is measured in grams): ");
             mass = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("\nNow enter the volume (this is measeured in meters cubed): ");
+            Console.WriteLine("\n Now enter the volume (this is measeured in meters cubed): ");
             vol = double.Parse(Console.ReadLine());
 
             temp = CelciusToKelvin(celcius);
             double numMoles = NumberOfMoles(mass, molecularWeight);
             double pressureInPascals = (numMoles * idealConst * temp) / vol;
             double psi = PaToPSI(pressureInPascals);
-            
-            Console.WriteLine("\nPressure in pascals is : " + pressureInPascals);
-            Console.WriteLine("\nThe PSI is: " + psi );
+
+            Console.WriteLine("\n**********************************************************");
+            Console.WriteLine("\n Pressure in pascals is: " + pressureInPascals);
+            Console.WriteLine("\n The PSI is: " + psi );
+            Console.WriteLine("\n**********************************************************");
             return pressureInPascals;
         }
          
