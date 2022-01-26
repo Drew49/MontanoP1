@@ -85,7 +85,7 @@ namespace MontanpP1
             var result = Array.IndexOf(gasNames, stringToFind);
             if (result == -1)
             {
-                Console.WriteLine("\n Check spelling of the gas you chose");
+                Console.WriteLine("\n Check spelling of the gas you chose.");
             }
             else
             {
@@ -122,7 +122,7 @@ namespace MontanpP1
             Console.WriteLine("\n Enter the mass of the gas (this is measured in grams): ");
             mass = double.Parse(Console.ReadLine());
 
-            Console.WriteLine("\n Now enter the volume (this is measeured in meters cubed): ");
+            Console.WriteLine("\n Now enter the volume (this is measured in meters cubed): ");
             vol = double.Parse(Console.ReadLine());
 
             temp = CelciusToKelvin(celcius);
